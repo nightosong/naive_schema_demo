@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from modules.loaders import NacosJsonSchemaLoader as loader
+from modules.loggers import system_log
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -23,7 +24,8 @@ class ConfigData(BaseModel):
 def load_config():
     try:
         return loader().download_from_nacos()
-    except Exception:
+    except Exception as e:
+        system_log.error(f"Configuration file not found: {e!s}")
         return JSONResponse(
             content={"error": "Configuration file not found"}, status_code=404
         )
@@ -34,7 +36,8 @@ def save_config(config_data: ConfigData):
     try:
         loader().upload_to_nacos(config_data.model_dump())
         return {"message": "Configuration saved successfully"}
-    except Exception:
+    except Exception as e:
+        system_log.error(f"Configuration save failed: {e!s}")
         return {"message": "Configuration save failed"}
 
 
