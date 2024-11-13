@@ -3,14 +3,7 @@ import json
 import nacos
 import yaml
 from abc import abstractmethod
-
-
-try:
-    from modules.loggers import sysmtem_log
-
-    print_err = sysmtem_log.error
-except ImportError:
-    print_err = print
+from modules.loggers import system_log
 
 
 class Dict2Object:
@@ -66,9 +59,9 @@ class NacosSchemaLoader:
                     cb=self.update_configure,
                 )
         except KeyError as err:
-            print_err(f"key error {err!s}")
+            system_log.error(f"key error {err!s}")
         except nacos.NacosException as err:
-            print_err(f"nacos exception {err!s}")
+            system_log.error(f"nacos exception {err!s}")
 
 
 class NacosYamlSchemaLoader(NacosSchemaLoader):
@@ -100,13 +93,13 @@ class NacosYamlSchemaLoader(NacosSchemaLoader):
                 else:
                     setattr(self, key, value)
         except TypeError as err:
-            print_err(f"type error: {err!s}")
+            system_log.error(f"type error: {err!s}")
         except yaml.YAMLError as err:
-            print_err(f"yaml error: {err!s}")
+            system_log.error(f"yaml error: {err!s}")
         except AttributeError as err:
-            print_err(f"attribute error: {err!s}")
+            system_log.error(f"attribute error: {err!s}")
         except Exception as err:
-            print_err(f"unknown error: {err!s}")
+            system_log.error(f"unknown error: {err!s}")
 
 
 class NacosJsonSchemaLoader(NacosSchemaLoader):
@@ -141,10 +134,10 @@ class NacosJsonSchemaLoader(NacosSchemaLoader):
                 else:
                     setattr(self, key, value)
         except TypeError as err:
-            print_err(f"type error: {err!s}")
+            system_log.error(f"type error: {err!s}")
         except json.JSONDecodeError as err:
-            print_err(f"json error: {err!s}")
+            system_log.error(f"json error: {err!s}")
         except AttributeError as err:
-            print_err(f"attribute error: {err!s}")
+            system_log.error(f"attribute error: {err!s}")
         except Exception as err:
-            print_err(f"unknown error: {err!s}")
+            system_log.error(f"unknown error: {err!s}")
