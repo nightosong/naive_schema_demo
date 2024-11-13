@@ -1,0 +1,82 @@
+{
+    "schema_title": "My Schema",
+    "schema_version": "1.0",
+    "description": "A schema for configuring system settings, including debugging, storage, and prompt configurations.",
+    "type": "object",
+    "properties": [
+        {
+            "title": "status",
+            "description": "System status configuration, including debugging and advertising settings.",
+            "type": "object",
+            "properties": [
+                {
+                    "title": "debug_enable",
+                    "description": "Indicates whether debugging mode is enabled or not.",
+                    "type": "bool",
+                    "enum": [
+                        true,
+                        false
+                    ],
+                    "value": true
+                },
+                {
+                    "title": "ad_status",
+                    "description": "A list of advertising statuses, which can be used to enable or disable advertisements.",
+                    "type": "list",
+                    "value": "ENABLE,DISABLE"
+                }
+            ]
+        },
+        {
+            "title": "storage",
+            "description": "Configuration for data storage, including Redis settings.",
+            "type": "object",
+            "properties": [
+                {
+                    "title": "redis",
+                    "description": "Redis configuration settings for the system.",
+                    "type": "object",
+                    "properties": [
+                        {
+                            "title": "host",
+                            "description": "The hostname or IP address of the Redis server.",
+                            "type": "string",
+                            "value": "redis.test.com"
+                        },
+                        {
+                            "title": "port",
+                            "description": "The port number used to connect to the Redis server.",
+                            "type": "int",
+                            "value": 6379
+                        },
+                        {
+                            "title": "password",
+                            "description": "The password used to authenticate with the Redis server.",
+                            "type": "string",
+                            "value": "123456"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "prompt",
+            "description": "Prompt configuration for system interactions, including system and user-defined prompts.",
+            "type": "object",
+            "properties": [
+                {
+                    "title": "system_prompt",
+                    "description": "The default system prompt message, used for system interactions.",
+                    "type": "string",
+                    "value": "Hello"
+                },
+                {
+                    "title": "user_prompt",
+                    "description": "The prompt message used for user interactions. This can be customized by the user.",
+                    "type": "string",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

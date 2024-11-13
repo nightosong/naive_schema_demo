@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Schema Editor</title>
+    <link rel="stylesheet" href="/static/css/schema.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="schema-title">{{ config.schema_title }}</div>
+    <div class="schema-version">Version: {{ config.schema_version }}</div>
+
+    <div v-for="(group, index) in config.properties" :key="index" class="group">
+        <div class="group-title">{{ group.title }} ({{ group.type }}: {{ group.description }})</div>
+            <div v-for="(property, idx) in group.properties" :key="idx" class="property">
+                <group-renderer :property="property" />
+        </div>
+    </div>
+
+    <button @click="saveConfig" class="fancy-button">Save Configuration</button>
+    <div v-if="message" style="margin-top: 10px;">{{ message }}</div>
+</div>
+
+<script>
+
+Vue.component('group-renderer', {
+  props: {
+    property: {
+        type: Object,
+        required: true
+    }
+  },
+  template: `
+  <div>
+    <label class="property-label">
+        {{ property.title }} ({{ property.type }}: {{ property.description }}): 
+    </label>
+    <div v-if="property.type === 'bool'" class="property-line">
+        <input type="checkbox" v-model="property.value">
+    </div>
+    <div v-else-if="property.type === 'string'" class="property-line">
+        <input type="text" v-model="property.value" placeholder="Comma-separated values" />
+    </div>
+    <div v-else-if="property.type === 'int' || property.type === 'float'" class="property-line">
+        <input type="number" v-model.number="property.value" placeholder="Enter number" />
+    </div>
+    <div v-else-if="property.type === 'list'" class="property-list">
+        <textarea v-model="property.value" placeholder="Comma-separated values" />
+    </div>
+    <div v-else-if="property.type === 'object'">
+        <div class="sub-group" style="margin-left: 20px;">
+            <group-renderer
+                v-for="(subProperty, subIdx) in property.properties"
+                :key="subIdx"
+                :property="subProperty"
+            />
+        </div>
+    </div>
+    <div v-else>
+        <input type="text" v-model="property.value">
+    </div>
+  </div>
+  `
+})
+
+new Vue({
+    el: '#app',
+    data: {
+        config: {
+            schema_title: '',
+            schema_version: '',
+            description: '',
+            type: '',
+            properties: []
+        },
+        message: ''
+    },
+    methods: {
+        loadConfig() {
+            axios.get('/load_config')
+                .then(response => {
+                    this.config = response.data;
+                })
+                .catch(error => {
+                    console.error("Error loading config:", error);
+                });
+        },
+        saveConfig() {
+            axios.post('/save_config', this.config)
+                .then(response => {
+                    this.message = response.data.message;
+                })
+                .catch(error => {
+                    console.error("Error saving config:", error);
+                });
+            this.message = "Configuration operation finished!";
+        }
+    },
+    mounted() {
+        this.loadConfig();
+    }
+});
+</script>
+</body>
+</html>

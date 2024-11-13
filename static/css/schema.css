@@ -1,0 +1,139 @@
+/* 主标题 */
+.schema-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #0056b3;
+    text-align: center;
+}
+
+/* 版本号 */
+.schema-version {
+    font-size: 1.2em;
+    color: #0073e6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 分组容器 */
+.group {
+    border: 2px solid #0073e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #e6f0ff; /* 淡蓝背景 */
+    box-shadow: 0px 4px 12px rgba(0, 115, 230, 0.2); /* 阴影效果 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 鼠标悬停效果 */
+.group:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 8px 16px rgba(0, 115, 230, 0.3);
+}
+
+/* 分组标题 */
+.group-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #0073e6;
+    border-bottom: 2px solid #0073e6;
+    padding-bottom: 5px;
+}
+
+/* 子分组（递归结构） */
+.sub-group {
+    border: 1px solid #0073e6;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f0f8ff; /* 更浅的蓝色背景 */
+    transition: background-color 0.3s ease;
+}
+
+/* 属性样式 */
+.property {
+    margin: 10px 0;
+}
+
+/* 属性标签 */
+.property label {
+    font-weight: bold;
+    color: #004080;
+}
+
+/* 输入框和复选框样式 */
+.property input[type="text"],
+.property input[type="number"],
+.property textarea {
+    margin-left: 10px;
+    padding: 8px;
+    border: 1px solid #0073e6;
+    border-radius: 4px;
+    font-size: 1em;
+    width: calc(100% - 20px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 输入框获得焦点时效果 */
+.property input[type="text"]:focus,
+.property input[type="number"]:focus,
+.property textarea:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 115, 230, 0.3);
+}
+
+/* 复选框样式 */
+.property input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-left: 10px;
+    accent-color: #0073e6;
+}
+
+/* 按钮样式 */
+.fancy-button {
+    background: linear-gradient(135deg, #4a90e2, #007aff); /* 使用蓝色渐变 */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 6px 15px rgba(0, 122, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* 悬停时反转渐变 */
+.fancy-button:hover {
+    background: linear-gradient(135deg, #007aff, #4a90e2);
+    box-shadow: 0px 8px 20px rgba(0, 122, 255, 0.5);
+    transform: translateY(-3px);
+}
+
+.fancy-button:active {
+    transform: translateY(2px);
+    box-shadow: 0px 4px 10px rgba(0, 122, 255, 0.3);
+}
+
+/* 标签前的短横线 */
+.property-label::before {
+    content: " - ";
+    color: #0073e6;
+    font-weight: bold;
+}
+
+.property-line {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.property-list {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}

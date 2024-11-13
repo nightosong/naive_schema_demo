@@ -1,0 +1,4 @@
+fastapi==0.115.4
+nacos-sdk-python==1.0.0
+pyyaml==6.0.2
+uvicorn==0.32.0
